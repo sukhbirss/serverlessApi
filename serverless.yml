@@ -1,0 +1,28 @@
+service:
+  name: ott-training-crud
+
+plugins:
+  - serverless-bundle
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  
+functions:
+  name:
+    handler: src/handlers/name.handler
+    events:
+      - http:
+          method: POST
+          path: /name
+  hello:
+    handler: src/handlers/hello.handler
+    events:
+      - http:
+          method: GET
+          path: /hello
+
