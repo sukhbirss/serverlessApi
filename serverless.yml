@@ -1,6 +1,8 @@
 service:
   name: ott-training-crud
-
+  disabledDeprecations:
+  - CODE_1 # To disable specific deprecation with code "CODE_1"
+  - "*" # To disable all deprecation messages
 plugins:
   - serverless-bundle
   - serverless-pseudo-parameters
@@ -8,6 +10,8 @@ plugins:
 custom:
   settings:
     POSTS_TABLE: s-ott-crud
+  bundle:
+    linting: false
 
 provider:
   name: aws

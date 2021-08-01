@@ -3,14 +3,21 @@ const AWS = require("aws-sdk");
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-async function name(event, context) {
+function response(statusCode, message) {
+  return {
+    statusCode: statusCode,
+    body: JSON.stringify(message)
+  };
+}
+
+async function name(event, context, callback) {
   const now = new Date();
   const reqBody = JSON.parse(event.body);
 
   const params = {
-    TableName: process.env.POSTS_TABLE,
+    TableName: "s-ott-crud",
     Item: {
-      uniqueId: uuid.v1(),
+      id: uuid.v1(),
       objectType: "AUDIO",
       clientID: reqBody.clientID || "",
       name: reqBody.name || "",
@@ -21,20 +28,19 @@ async function name(event, context) {
     },
   };
 
-  await dynamoDb.put(params).promise();
-
-  const auction = {
-    status: 'OPEN',
+  const auction2 = {
+    status: 'success',
     createdAt: now.toISOString(),
     reqBody,
     params,
   };
+  return dynamoDb.put(params).promise()
+  	.then(() => {callback(null,response(201,auction2))})
+  	.catch(err => callback(null,response(err.statusCode,err)));
 
 
-  return {
-    statusCode: 201,
-    body: JSON.stringify(auction),
-  };
+
+
 }
 
 export const handler = name;
