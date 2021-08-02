@@ -1,14 +1,14 @@
 
 async function hello(event, context) {
   const now = new Date();
-  const auction = {
-    status: 'hello',
+  const response = {
+    status: 'hello from aws',
     createdAt: now.toISOString(),
   };
 
   return {
-    statusCode: 201,
-    body: JSON.stringify(auction),
+    statusCode: 200,
+    body: JSON.stringify(response),
   };
 }
 

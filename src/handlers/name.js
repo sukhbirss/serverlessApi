@@ -28,14 +28,14 @@ async function name(event, context, callback) {
     },
   };
 
-  const auction2 = {
+  const response = {
     status: 'success',
     createdAt: now.toISOString(),
     reqBody,
     params,
   };
   return dynamoDb.put(params).promise()
-  	.then(() => {callback(null,response(201,auction2))})
+  	.then(() => {callback(null,response(201,response))})
   	.catch(err => callback(null,response(err.statusCode,err)));
 
 
