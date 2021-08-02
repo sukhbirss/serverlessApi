@@ -31,7 +31,6 @@ async function name(event, context, callback) {
   const response = {
     status: 'success',
     createdAt: now.toISOString(),
-    reqBody,
     params,
   };
   return dynamoDb.put(params).promise()
