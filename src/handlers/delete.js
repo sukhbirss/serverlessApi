@@ -9,23 +9,31 @@ function response(statusCode, message) {
 }
 
 async function deletefunc(event, context, callback) {
-  // const id = event.pathParameters.id;
-  return {
-    statusCode: statusCode,
-    body: "id",
+  const reqBody = JSON.parse(event.body);
+  // return {
+  //   statusCode: 200,
+  //   body: reqBody.id,
+  // };
+
+  const params = {
+    Key: {
+      id: reqBody.id
+    },
+    TableName: "s-ott-crud"
   };
 
-  // const params = {
-  //   Key: {
-  //     id: id
-  //   },
-  //   TableName: "s-ott-crud"
-  // };
-  // return db.delete(params).promise()
-  //   .then(() =>
-  //     callback(null, response(200, { message: 'Post deleted successfully' }))
-  //   )
-  //   .catch((err) => callback(null, response(err.statusCode, err)));
+
+  const result = await dynamoDb.get(params).promise();
+  if(result.Item){
+     return dynamoDb.delete(params).promise()
+    .then(() =>
+      callback(null, response(200, { message: 'Post deleted successfully',id:result }))
+    )
+    .catch((err) => callback(null, response(200, err)));
+  }
+
+   callback(null, response(200, { message: 'Does not exist',id:result }))
+
 };
 
 
