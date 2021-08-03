@@ -28,13 +28,13 @@ async function name(event, context, callback) {
     },
   };
 
-  const response = {
+  const result = {
     status: 'success',
     createdAt: now.toISOString(),
     params,
   };
   return dynamoDb.put(params).promise()
-  	.then(() => {callback(null,response(201,response))})
+  	.then(() => {callback(null,response(201,result))})
   	.catch(err => callback(null,response(err.statusCode,err)));
 
 
