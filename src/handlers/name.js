@@ -37,9 +37,6 @@ async function name(event, context, callback) {
   	.then(() => {callback(null,response(201,result))})
   	.catch(err => callback(null,response(err.statusCode,err)));
 
-
-
-
 }
 
 export const handler = name;

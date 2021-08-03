@@ -44,6 +44,12 @@ functions:
       - http:
           method: GET
           path: /hello
+  delete:
+    handler: src/handlers/delete.handler
+    events:
+      - http:
+          method: DELETE
+          path: /delete/{id}
           
 resources:
   Resources:
