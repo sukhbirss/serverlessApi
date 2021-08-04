@@ -2,7 +2,7 @@
 async function hello(event, context) {
   const now = new Date();
   const response = {
-    status: 'hello from aws',
+    status: 'hello from aws lambda',
     createdAt: now.toISOString(),
   };
 
